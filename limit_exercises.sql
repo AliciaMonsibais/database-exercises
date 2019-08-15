@@ -23,3 +23,11 @@ WHERE (hire_date LIKE '199%' AND
        birth_date LIKE '%12-25')
 ORDER BY birth_date, hire_date DESC
 LIMIT 5 OFFSET 45;
+
+select concat(first_name, ' ', last_name) from employees;
+
+SELECT CONCAT(
+               'Teaching people to code for ',
+               UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2014-02-04'),
+               ' seconds'
+           );
