@@ -15,7 +15,7 @@
 select d.dept_name as 'Department Name', concat_ws(' ', e.first_name, e.last_name) as 'Department Manager'
 from departments d
         join dept_manager dm on d.dept_no = dm.dept_no
-join employees e on e.emp_no = dm.emp_no
+        join employees e on e.emp_no = dm.emp_no
 where dm.to_date > CURDATE()
 order by d.dept_name;
 
@@ -45,4 +45,11 @@ where dm.to_date > CURDATE() and s.to_date > CURDATE()
 order by d.dept_name;
 
 # Bonus Find the names of all current employees, their department name, and their current manager's name.
-
+select concat_ws(' ', e.first_name, e.last_name) as 'Employee Name', dept_name as 'Department Name', concat_ws(' ', mgr.first_name, mgr.last_name) as 'Manager Name'
+from employees e
+        join dept_emp de on e.emp_no = de.emp_no
+        join departments d on d.dept_no = de.dept_no
+        join dept_manager dm on d.dept_no = dm.dept_no
+        join employees mgr on mgr.emp_no = dm.emp_no
+where de.to_date > CURDATE() and dm.to_date > CURDATE()
+order by d.dept_name;
