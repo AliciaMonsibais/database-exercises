@@ -33,12 +33,15 @@ order by d.dept_name;
 select t.title as 'Title', COUNT(t.title) as 'Count'
 from titles t
         join dept_emp de on de.emp_no = t.emp_no
-        join departments d on d.dept_no = de.dept_no
-where d.dept_name = 'Customer Service' and t.to_date > NOW()
+        join departments d on de.dept_no = d.dept_no
+# the table has an expiration date, so make sure to match all the counts. This is why you use de.to_date!
+where d.dept_name = 'Customer Service' and t.to_date > CURDATE() and de.to_date > curdate()
 group by t.title;
 
 # Find the current salary of all current managers.
-select dept_name as 'Department Name', concat_ws(' ', first_name, last_name) as 'Name', s.salary as 'Salary'
+select dept_name as 'Department Name',
+       concat_ws(' ', first_name, last_name) as 'Name',
+       s.salary as 'Salary'
 from departments d
         join dept_manager dm on d.dept_no = dm.dept_no
         join employees e on dm.emp_no = e.emp_no
